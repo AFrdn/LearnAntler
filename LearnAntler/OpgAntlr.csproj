@@ -56,9 +56,6 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="Opg.g4" />
-    <None Include="Speak.g4">
-      <Listener>true</Listener>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Antlr4.Runtime.Standard">
