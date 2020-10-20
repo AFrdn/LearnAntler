@@ -42,7 +42,9 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HeaderContentBuilder.cs" />
     <Compile Include="HeaderContentVisitorTests.cs" />
+    <Compile Include="OpgPrebuilt.cs" />
     <Compile Include="TestsCommon.cs" />
     <Compile Include="ParserTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

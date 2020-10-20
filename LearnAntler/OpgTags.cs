@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
+﻿using LearnAntler.DTO;
 
 namespace LearnAntler
 {
@@ -18,46 +13,12 @@ namespace LearnAntler
 		public const string BodyStart = "<body>";
 		public const string BodyEnd = "</body>";
 		public const string FileVersion = "File Version:";
+		public const string Separator = "Separator:";
 	}
 
-	public class HeaderContentBuilder
+	public static class OpgDefaults
 	{
-		private int? mFileVersion = 42;
-
-		public string Build()
-		{
-			var fileVersionString = mFileVersion.HasValue ? mFileVersion.ToString() : string.Empty;
-			return $"{OpgTags.FileVersion} {fileVersionString}";
-		}
-
-		public HeaderContentBuilder WithFileVersion(int? fileVersion)
-		{
-			mFileVersion = fileVersion;
-			return this;
-		}
-	}
-
-	public static class OpgPrebuilt
-	{
-		public static readonly string HeaderContent = new HeaderContentBuilder().Build();
-
-		public static readonly string Header =
-			$"{OpgTags.HeaderStart}" +
-			$"{HeaderContent}" +
-			$"{OpgTags.HeaderEnd}";
-
-		public static string HeaderExt =
-			$"{OpgTags.HeaderExtStart}" +
-			$"{OpgTags.HeaderExtEnd}";
-
-		public static string Body =
-			$"{OpgTags.BodyStart}" +
-			$"{OpgTags.BodyEnd}";
-
-		public static string FileContent =
-			$"{Header}" +
-			$"{HeaderExt}" +
-			$"{Body}";
-
+		public const int FileVersion = 3;
+		public const string Separator = "\t";
 	}
 }

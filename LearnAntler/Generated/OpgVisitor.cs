@@ -85,4 +85,10 @@ public interface IOpgVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
 	Result VisitFileVersion([NotNull] OpgParser.FileVersionContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="OpgParser.separator"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitSeparator([NotNull] OpgParser.SeparatorContext context);
 }

@@ -16,7 +16,7 @@ namespace OpgAntlrTests
 			var context = parser.file();
 
 			test.ParserErrors.Should().Contain(
-				x => x.Contains($"mismatched input '<EOF>' expecting '{OpgTags.FileStart}'"));
+				x => x.Contains($"expecting '{OpgTags.FileStart}'"));
 		}
 
 		[TestMethod]
@@ -60,7 +60,7 @@ namespace OpgAntlrTests
 			parser.header();
 
 			test.ParserErrors.Should().Contain(
-				x => x.Contains($"mismatched input '<EOF>' expecting '{OpgTags.HeaderStart}'"));
+				x => x.Contains($"expecting '{OpgTags.HeaderStart}'"));
 		}
 
 		[TestMethod]
@@ -75,26 +75,49 @@ namespace OpgAntlrTests
 		}
 
 		[TestMethod]
-		public void Header_MissingFileVersion_Error()
+		public void Header_FileVersionEntryAbsent_Error()
 		{
 			var test = new TestHelper();
-			var parser = test.Setup($"{OpgTags.HeaderStart}{OpgTags.HeaderEnd}");
+			var headerContent = new HeaderContentBuilder().WithoutFileVersion().Build();
+			var parser = test.Setup($"{OpgTags.HeaderStart}{headerContent}{OpgTags.HeaderEnd}");
 			parser.header();
 
 			test.ParserErrors.Should().Contain(
-				x => x.Contains($"missing '{OpgTags.FileVersion}'"));
+				x => x.Contains($"expecting '{OpgTags.FileVersion}'"));
 		}
 
 		[TestMethod]
-		public void Header_FileVersionMissingNumber_NoError()
+		public void Header_FileVersionValueAbsent_NoError()
 		{
 			var test = new TestHelper();
-			var parser = test.Setup($"{OpgTags.FileVersion}  ");
+			var text = new HeaderContentBuilder().WithFileVersion(null).Build();
+			var parser = test.Setup(text);
 			parser.headerContent();
 
 			test.ParserErrors.Should().BeEmpty();
 		}
 
+		[TestMethod]
+		public void Header_SeparatorEntryAbsent_Error()
+		{
+			var test = new TestHelper();
+			var headerContent = new HeaderContentBuilder().WithoutSeparator().Build();
+			var parser = test.Setup($"{OpgTags.HeaderStart}{headerContent}{OpgTags.HeaderEnd}");
+			parser.header();
 
+			test.ParserErrors.Should().Contain(
+				x => x.Contains($"expecting '{OpgTags.Separator}'"));
+		}
+
+		[TestMethod]
+		public void Header_SeparatorValueAbsent_NoError()
+		{
+			var test = new TestHelper();
+			var text = new HeaderContentBuilder().WithSeparator(string.Empty).Build();
+			var parser = test.Setup(text);
+			parser.headerContent();
+
+			test.ParserErrors.Should().BeEmpty();
+		}
 	}
 }

@@ -10,33 +10,47 @@ namespace OpgAntlrTests
 	public class HeaderContentVisitorTests
 	{
 		[TestMethod]
-		public void HeaderContentVisitor_VersionProvided_RecoverVersion()
+		public void HeaderContentVisitor_VersionProvided_GetValue()
 		{
 			var test = new TestHelper();
-			var expected = 13;
+			const int expected = 13;
 			var opgText = new HeaderContentBuilder().WithFileVersion(expected).Build();
 			var parser = test.Setup(opgText);
 			var context = parser.headerContent();
 			var sut = new HeaderContentVisitor();
 
-			var fileVersion = sut.VisitHeaderContent(context);
+			var header = sut.VisitHeaderContent(context);
 
-			fileVersion.Should().Be(expected);
+			header.FileVersion.Should().Be(expected);
 		}
 
 		[TestMethod]
-		public void HeaderContentVisitor_VersionNotProvided_GetZero()
+		public void HeaderContentVisitor_VersionAbsent_GetDefault()
 		{
 			var test = new TestHelper();
-			var expected = 0;
+			const int expected = OpgDefaults.FileVersion;
 			var opgText = new HeaderContentBuilder().WithFileVersion(null).Build();
 			var parser = test.Setup(opgText);
 			var context = parser.headerContent();
 			var sut = new HeaderContentVisitor();
 
-			var fileVersion = sut.VisitHeaderContent(context);
+			var header = sut.VisitHeaderContent(context);
 
-			fileVersion.Should().Be(expected);
+			header.FileVersion.Should().Be(expected);
+		}
+
+		[TestMethod]
+		public void HeaderContentVisitor_SeparatorProvided_GetValue()
+		{
+			var test = new TestHelper();
+			const string expected = "@";
+			var opgText = new HeaderContentBuilder().WithSeparator(expected).Build();
+		}
+
+		[TestMethod]
+		public void HeaderContentVisitor_SeparatorAbsent_GetDefault()
+		{
+
 		}
 	}
 }

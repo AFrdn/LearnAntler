@@ -10,12 +10,15 @@ additionalSection	: SectionOpenTag SectionCloseTag;
 header				: HeaderOpenTag headerContent HeaderCloseTag;
 headerExt			: HeaderExtOpenTag HeaderExtCloseTag;
 body				: FloatingBodyTag* BodyOpenTag BodyCloseTag;
-headerContent		: fileVersion;
-fileVersion			: FileVersionTag FileVersionContent?;
+headerContent		: fileVersion separator;
+fileVersion			: FileVersionTag FileVersionContent? NEWLINE;
+separator			: SeparatorTag SeparatorContent? NEWLINE;
 
 /*
  * Lexer Rules
  */
+NEWLINE             : ('\r'? '\n' | '\r')+ ;
+WHITESPACE          : (' '|'\t')+ -> skip ;
 FileOpenTag			: '<opimrtascii>';
 FileCloseTag		: '</opimrtascii>';
 HeaderOpenTag		: '<asciiheader>';
@@ -30,5 +33,7 @@ HeaderContent		: 'temp';
 FloatingBodyTag		: 'temp2';
 FileVersionTag		: 'File Version:';
 FileVersionContent	: NUMBER;
-WHITESPACE          : (' '|'\t')+ -> skip ;
+SeparatorTag		: 'Separator:';
+SeparatorContent	: TEXT;
 NUMBER				: [0-9]+;
+TEXT				: (.)+?;

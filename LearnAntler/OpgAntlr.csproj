@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DTO\Header.cs" />
     <Compile Include="Generated\OpgBaseVisitor.cs" />
     <Compile Include="Generated\OpgLexer.cs" />
     <Compile Include="Generated\OpgParser.cs" />
@@ -50,7 +51,7 @@
     <Compile Include="OpgTags.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Visitors\HeaderVisitor.cs" />
+    <Compile Include="Visitors\HeaderContentVisitor.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
